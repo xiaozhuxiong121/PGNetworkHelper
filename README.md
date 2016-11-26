@@ -16,7 +16,7 @@ pod 'PGNetworkHelper'
 //多用户一般用userId来保存每个用户的缓存数据
 [PGNetworkCache pathName:@"userId"];
 ```
-# github Address  
+# Github Address  
 
 https://github.com/xiaozhuxiong121/PGNetworkHelper
 
