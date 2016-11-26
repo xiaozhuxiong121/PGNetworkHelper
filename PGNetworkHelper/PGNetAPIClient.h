@@ -5,7 +5,7 @@
 //  Copyright © 2016年 piggybear. All rights reserved.
 //
 
-#import "AFHTTPSessionManager.h"
+#import <AFNetworking/AFHTTPSessionManager.h>
 
 @interface PGNetAPIClient : AFHTTPSessionManager
 
