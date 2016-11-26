@@ -1,24 +1,37 @@
-# PGNetworkHelper
-PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来
-# Installation with CocoaPods
-```
-pod 'PGNetworkHelper'
-```
-# Usage
-``` oc
-#import <PGNetworkHelper.h>
+//
+//  PGNetworkHelper.h
+//
+//  Created by piggybear on 16/8/22.
+//  Copyright © 2016年 piggybear. All rights reserved.
+//
 
-//设置baseUrl(必须要设置)
-[PGNetAPIClient baseUrl:@"baseUrl"];
-//设置SSL
-[PGNetAPIClient policyWithPinningMode:AFSSLPinningModeNone];
-//设置缓存路径
-//多用户一般用userId来保存每个用户的缓存数据
-[PGNetworkCache pathName:@"userId"];
-```
-# API
-## PGNetworkHelper
-```oc
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "PGNetworkCache.h"
+#import "PGNetAPIClient.h"
+#import "AFNetworking.h"
+#import "PINCache.h"
+
+/** 请求成功的Block */
+typedef void(^HttpRequestSuccess)(id responseObject);
+
+/** 请求失败的Block */
+typedef void(^HttpRequestFailed)(NSError *error);
+
+/** 缓存的Block */
+typedef void(^HttpRequestCache)(id responseCache);
+/** 上传或者下载的进度, Progress.completedUnitCount:当前大小 - Progress.totalUnitCount:总大小*/
+typedef void (^HttpProgress)(NSProgress *progress);
+
+@interface PGNetworkHelper : NSObject
+
+/**
+ *  请求超时时间
+ */
++(void)timeoutInterval:(NSTimeInterval)timeInterval;
+
++ (PGNetAPIClient *)manager;
+
 /**
  *  GET请求
  *
@@ -56,6 +69,7 @@ pod 'PGNetworkHelper'
              responseCache:(HttpRequestCache)responseCache
                    success:(HttpRequestSuccess)success
                    failure:(HttpRequestFailed)failure;
+
 /**
  *  上传图片文件
  *
@@ -97,53 +111,11 @@ pod 'PGNetworkHelper'
                                       progress:(HttpProgress)progress
                                        success:(void(^)(NSString *filePath))success
                                        failure:(HttpRequestFailed)failure;
-```
-## PGNetworkCache
-``` oc
-/**
- *  设置缓存路径
- *
- *  @param name 路径文件夹的名称
- */
-+ (void)pathName:(NSString *)name;
 
 /**
- *  缓存网络数据
- *
- *  @param responseCache 服务器返回的数据
- *  @param key           缓存数据对应的key值,推荐填入请求的URL
+ *  取消所有的网络请求
  */
-+ (void)saveResponseCache:(id <NSCoding>)responseCache forKey:(NSString *)key;
++ (void)cancelAllOperations;
 
-/**
- *  取出缓存的数据
- *
- *  @param key 根据存入时候填入的key值来取出对应的数据
- *
- *  @return 缓存的数据
- */
-+ (id)getResponseCacheForKey:(NSString *)key;
+@end
 
-/**
- *
- *  删除缓存
- *  @param key 要删除缓存的key值
- */
-+ (void)removeResponseCacheForKey:(NSString *)key;
-
-/**
- *  删除所有的缓存
- */
-+ (void)removeAllResponseCache;
-```
-## PGNetAPIClient
-``` oc
-/**
- *  设置baseUrl
- */
-+ (void)baseUrl:(NSString *)baseUrl;
-/**
- *  设置ssl
- */
-+ (void)policyWithPinningMode:(AFSSLPinningMode)pinningMode;
-```
