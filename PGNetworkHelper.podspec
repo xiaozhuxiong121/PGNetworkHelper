@@ -6,13 +6,12 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "piggybear" => "piggybear_net@163.com" }
   s.platform     = :ios, "8.0"
-  s.ios.deployment_target = '8.0'
   s.source       = { :git => "https://github.com/xiaozhuxiong121/PGNetworkHelper.git", :tag => s.version }
   s.source_files = "PGNetworkHelper", "PGNetworkHelper/**/*.{h,m}"
   s.frameworks   = "UIKit"
   s.requires_arc = true
 
-  s.dependency 'AFNetworking'
+  s.dependency 'AFNetworking', ~ '3.0'
   s.dependency 'PINCache'
 end
  

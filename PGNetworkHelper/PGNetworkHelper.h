@@ -7,10 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
 #import "PGNetworkCache.h"
 #import "PGNetAPIClient.h"
-#import "AFNetworking.h"
-#import "PINCache.h"
 
 /** 请求成功的Block */
 typedef void(^HttpRequestSuccess)(id responseObject);
