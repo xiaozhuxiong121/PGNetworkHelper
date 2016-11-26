@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.frameworks   = "UIKit"
   s.requires_arc = true
 
-  s.dependency 'AFNetworking', ~ '3.0'
+  s.dependency 'AFNetworking'
   s.dependency 'PINCache'
 end
  
