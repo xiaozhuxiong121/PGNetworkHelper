@@ -1,0 +1,2 @@
+# PGNetworkHelper
+PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来
