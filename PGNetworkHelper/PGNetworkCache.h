@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PINCache.h"
+#import <PINCache/PINCache.h>
 
 #pragma mark - 网络数据缓存类
 
