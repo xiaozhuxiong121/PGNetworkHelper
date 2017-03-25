@@ -10,7 +10,7 @@
 @implementation PGNetAPIClient
 
 static NSString *_baseUrl = @"";
-static AFSSLPinningMode _pinningMode;
+static AFSSLPinningMode _pinningMode = AFSSLPinningModeNone;
 
 + (instancetype)sharedClient {
     static PGNetAPIClient *_sharedClient = nil;

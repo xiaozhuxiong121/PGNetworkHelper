@@ -158,8 +158,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [PGNetAPIClient sharedClient];
-        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        manager.requestSerializer.timeoutInterval = 10.0f;
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.requestSerializer.timeoutInterval = 5.0f;
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     });
