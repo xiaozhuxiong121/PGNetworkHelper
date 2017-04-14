@@ -16,7 +16,10 @@
                   success:(HttpRequestSuccess)success
                   failure:(HttpRequestFailed)failure {
     
-    NSString *cacheKey = [URL stringByAppendingString:parameters];
+    NSString *cacheKey = URL;
+    if (parameters) {
+        cacheKey = [URL stringByAppendingString:[self dictionaryConvertJsonString:parameters]];
+    }
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
@@ -44,11 +47,13 @@
                    success:(HttpRequestSuccess)success
                    failure:(HttpRequestFailed)failure {
     
-    NSString *cacheKey = [URL stringByAppendingString:parameters];
+    NSString *cacheKey = URL;
+    if (parameters) {
+        cacheKey = [URL stringByAppendingString:[self dictionaryConvertJsonString:parameters]];
+    }
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
-    
     AFHTTPSessionManager *manager = [self manager];
     return [manager POST:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -96,12 +101,12 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         success(responseObject);
-//        NSLog(@"responseObject = %@",responseObject);
+        //        NSLog(@"responseObject = %@",responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         failure ? failure(error) : nil;
-//        NSLog(@"error = %@",error);
+        //        NSLog(@"error = %@",error);
     }];
 }
 
@@ -119,7 +124,7 @@
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         //下载进度
         progress ? progress(downloadProgress) : nil;
-//        NSLog(@"下载进度:%.2f%%",100.0*downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
+        //        NSLog(@"下载进度:%.2f%%",100.0*downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
@@ -134,7 +139,7 @@
         //拼接文件路径
         NSString *filePath = [downloadDir stringByAppendingPathComponent:response.suggestedFilename];
         
-//        NSLog(@"downloadDir = %@",downloadDir);
+        //        NSLog(@"downloadDir = %@",downloadDir);
         
         //返回文件位置的URL路径
         return [NSURL fileURLWithPath:filePath];
@@ -173,6 +178,12 @@
 
 + (void)cancelAllOperations {
     [[self manager].operationQueue cancelAllOperations];
+}
+
++ (NSString *)dictionaryConvertJsonString:(id)parameter {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:parameter options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    return jsonStr;
 }
 
 @end
