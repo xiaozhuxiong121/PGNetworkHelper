@@ -16,19 +16,18 @@
                   success:(HttpRequestSuccess)success
                   failure:(HttpRequestFailed)failure {
     
+    NSString *cacheKey = [URL stringByAppendingString:parameters];
     if (responseCache) {
-        responseCache([PGNetworkCache getResponseCacheForKey:URL]);
+        responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
-    
     AFHTTPSessionManager *manager = [self manager];
     
     return [manager GET:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (cache) {
-            [PGNetworkCache saveResponseCache:responseObject forKey:URL];
+            [PGNetworkCache saveResponseCache:responseObject forKey:cacheKey];
         }
-        
         if (success) {
             success(responseObject);
         }
@@ -45,8 +44,9 @@
                    success:(HttpRequestSuccess)success
                    failure:(HttpRequestFailed)failure {
     
+    NSString *cacheKey = [URL stringByAppendingString:parameters];
     if (responseCache) {
-        responseCache([PGNetworkCache getResponseCacheForKey:URL]);
+        responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
     
     AFHTTPSessionManager *manager = [self manager];
@@ -54,7 +54,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (cache) {
-            [PGNetworkCache saveResponseCache:responseObject forKey:URL];
+            [PGNetworkCache saveResponseCache:responseObject forKey:cacheKey];
         }
         
         if (success) {
@@ -96,12 +96,12 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         success(responseObject);
-        NSLog(@"responseObject = %@",responseObject);
+//        NSLog(@"responseObject = %@",responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         failure ? failure(error) : nil;
-        NSLog(@"error = %@",error);
+//        NSLog(@"error = %@",error);
     }];
 }
 
@@ -119,7 +119,7 @@
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         //下载进度
         progress ? progress(downloadProgress) : nil;
-        NSLog(@"下载进度:%.2f%%",100.0*downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
+//        NSLog(@"下载进度:%.2f%%",100.0*downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
@@ -134,7 +134,7 @@
         //拼接文件路径
         NSString *filePath = [downloadDir stringByAppendingPathComponent:response.suggestedFilename];
         
-        NSLog(@"downloadDir = %@",downloadDir);
+//        NSLog(@"downloadDir = %@",downloadDir);
         
         //返回文件位置的URL路径
         return [NSURL fileURLWithPath:filePath];

@@ -7,7 +7,6 @@
 
 #import "PGNetworkCache.h"
 
-
 @implementation PGNetworkCache
 static PINCache *pinCache = nil;
 

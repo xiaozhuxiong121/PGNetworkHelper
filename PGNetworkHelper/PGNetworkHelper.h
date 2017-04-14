@@ -11,7 +11,6 @@
 #import "PGNetworkCache.h"
 #import "PGNetAPIClient.h"
 
-
 /** 请求成功的Block */
 typedef void(^HttpRequestSuccess)(id responseObject);
 

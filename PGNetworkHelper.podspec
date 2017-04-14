@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "PGNetworkHelper"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来。"
   s.homepage     = "https://github.com/xiaozhuxiong121/PGNetworkHelper"
   s.license      = "MIT"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.frameworks   = "UIKit"
   s.requires_arc = true
 
-  s.dependency 'AFNetworking','3.1.0'
-  s.dependency 'PINCache','2.3'
+  s.dependency 'AFNetworking'
+  s.dependency 'PINCache'
 end
  
