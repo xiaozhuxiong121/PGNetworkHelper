@@ -1,5 +1,5 @@
 # PGNetworkHelper
-PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来
+PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，使用方法及其简单。
 # Installation with CocoaPods
 ```
 pod 'PGNetworkHelper'
@@ -15,6 +15,19 @@ pod 'PGNetworkHelper'
 //设置缓存路径
 //多用户一般用userId来保存每个用户的缓存数据
 [PGNetworkCache pathName:@"userId"];
+//GET请求
+[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:false responseCache:nil success:^(id responseObject) {
+    NSLog(@"error = %@", responseObject);
+} failure:^(NSError *error) {
+        NSLog(@"error = %@", error);
+}];
+//POST请求
+[PGNetworkHelper POST:@"api/user/login.json" parameters:@{@"username":@"test",@"password":@"test"} cache:false responseCache:nil success:^(id responseObject) {
+    NSLog(@"error = %@", responseObject);
+} failure:^(NSError *error) {
+    NSLog(@"error = %@", error);
+}];
+    
 ```
 # API
 ## PGNetworkHelper
