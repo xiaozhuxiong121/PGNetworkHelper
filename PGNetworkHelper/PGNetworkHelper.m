@@ -54,6 +54,7 @@
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
+//    NSLog(@"cacheKey = %@", cacheKey);
     AFHTTPSessionManager *manager = [self manager];
     return [manager POST:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -91,8 +92,11 @@
         //压缩-添加-上传图片
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-            [formData appendPartWithFileData:imageData name:name fileName:[NSString stringWithFormat:@"%@%lud.%@",fileName,(unsigned long)idx,mimeType?mimeType:@"jpeg"] mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
+            NSString *fileName1 = [NSString stringWithFormat:@"%@%ld.png", fileName, idx];
+            NSString *name1 = [NSString stringWithFormat:@"%@%ld", name, idx];
+            [formData appendPartWithFileData:imageData name:name1 fileName:fileName1 mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
         }];
+        
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         //上传进度
         progress ? progress(uploadProgress) : nil;

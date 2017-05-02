@@ -11,7 +11,10 @@
 static PINCache *pinCache = nil;
 
 + (void)pathName:(NSString *)name {
-    pinCache = [[PINCache sharedCache] initWithName:[NSString stringWithFormat:@"%@/%@", [PINCache sharedCache].name, name]];
+ static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pinCache = [[PINCache sharedCache] initWithName:[NSString stringWithFormat:@"%@/%@", [PINCache sharedCache].name, name]];
+    });
 }
 
 + (void)saveResponseCache:(id <NSCoding>)responseCache forKey:(NSString *)key {
