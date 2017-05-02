@@ -92,8 +92,9 @@
         //压缩-添加-上传图片
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-            NSString *fileName1 = [NSString stringWithFormat:@"%@%ld.png", fileName, idx];
-            NSString *name1 = [NSString stringWithFormat:@"%@%ld", name, idx];
+            NSInteger index = idx;
+            NSString *fileName1 = [NSString stringWithFormat:@"%@%ld.png", fileName, index];
+            NSString *name1 = [NSString stringWithFormat:@"%@%ld", name, index];
             [formData appendPartWithFileData:imageData name:name1 fileName:fileName1 mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
         }];
         
