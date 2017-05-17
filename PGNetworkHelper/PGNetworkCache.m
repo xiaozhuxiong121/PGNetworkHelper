@@ -11,10 +11,10 @@
 static PINCache *pinCache = nil;
 
 + (void)pathName:(NSString *)name {
- static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        pinCache = [[PINCache sharedCache] initWithName:[NSString stringWithFormat:@"%@/%@", [PINCache sharedCache].name, name]];
-    });
+  NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    cachePath = [cachePath stringByAppendingPathComponent:@"com.pinterest.PINDiskCache.PINCacheShared"];
+    cachePath = [cachePath stringByAppendingPathComponent:name];
+   pinCache = [[PINCache sharedCache] initWithName:@"name" rootPath:cachePath];
 }
 
 + (void)saveResponseCache:(id <NSCoding>)responseCache forKey:(NSString *)key {
