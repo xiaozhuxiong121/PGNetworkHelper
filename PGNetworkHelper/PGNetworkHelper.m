@@ -78,7 +78,6 @@
                          parameters:(NSDictionary *)parameters
                              images:(NSArray<UIImage *> *)images
                                name:(NSString *)name
-                         dateFormat:(NSString *)dateFormat
                            mimeType:(NSString *)mimeType
                            progress:(HttpProgress)progress
                             success:(HttpRequestSuccess)success
