@@ -54,7 +54,7 @@
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
     }
-//    NSLog(@"cacheKey = %@", cacheKey);
+    NSLog(@"cacheKey = %@", cacheKey);
     AFHTTPSessionManager *manager = [self manager];
     return [manager POST:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -78,7 +78,7 @@
                          parameters:(NSDictionary *)parameters
                              images:(NSArray<UIImage *> *)images
                                name:(NSString *)name
-                           fileName:(NSString *)fileName
+                         dateFormat:(NSString *)dateFormat
                            mimeType:(NSString *)mimeType
                            progress:(HttpProgress)progress
                             success:(HttpRequestSuccess)success
@@ -93,9 +93,15 @@
         [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
             long index = idx;
-            NSString *fileName1 = [NSString stringWithFormat:@"%@%ld.png", fileName, index];
+            
+            NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
+            long long totalMilliseconds = interval*1000 ;
+            NSString *fileName = [NSString stringWithFormat:@"%lld.png", totalMilliseconds];
+            
+            
             NSString *name1 = [NSString stringWithFormat:@"%@%ld", name, index];
-            [formData appendPartWithFileData:imageData name:name1 fileName:fileName1 mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
+            NSLog(@"fileName = %@   name1 = %@", fileName, name1);
+            [formData appendPartWithFileData:imageData name:name1 fileName:fileName mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
         }];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {

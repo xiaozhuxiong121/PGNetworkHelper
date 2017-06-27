@@ -76,7 +76,7 @@ typedef void (^HttpProgress)(NSProgress *progress);
  *  @param parameters 请求参数
  *  @param images     图片数组
  *  @param name       文件对应服务器上的字段
- *  @param fileName   文件名
+ *  @param dateFormat 时间戳格式化
  *  @param mimeType   图片文件的类型,例:png、jpeg(默认类型)....
  *  @param progress   上传进度信息
  *  @param success    请求成功的回调
@@ -84,15 +84,15 @@ typedef void (^HttpProgress)(NSProgress *progress);
  *
  *  @return 返回的对象可取消请求,调用cancle方法
  */
-+ (__kindof NSURLSessionTask *)uploadWithURL:(NSString *)URL
-                                  parameters:(NSDictionary *)parameters
-                                      images:(NSArray<UIImage *> *)images
-                                        name:(NSString *)name
-                                    fileName:(NSString *)fileName
-                                    mimeType:(NSString *)mimeType
-                                    progress:(HttpProgress)progress
-                                     success:(HttpRequestSuccess)success
-                                     failure:(HttpRequestFailed)failure;
++ (NSURLSessionTask *)uploadWithURL:(NSString *)URL
+                         parameters:(NSDictionary *)parameters
+                             images:(NSArray<UIImage *> *)images
+                               name:(NSString *)name
+                         dateFormat:(NSString *)dateFormat
+                           mimeType:(NSString *)mimeType
+                           progress:(HttpProgress)progress
+                            success:(HttpRequestSuccess)success
+                            failure:(HttpRequestFailed)failure;
 
 /**
  *  下载文件
