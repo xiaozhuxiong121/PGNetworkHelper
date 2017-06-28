@@ -99,7 +99,7 @@
             
             
             NSString *name1 = [NSString stringWithFormat:@"%@%ld", name, index];
-            NSLog(@"fileName = %@   name1 = %@", fileName, name1);
+            // NSLog(@"fileName = %@   name1 = %@", fileName, name1);
             [formData appendPartWithFileData:imageData name:name1 fileName:fileName mimeType:[NSString stringWithFormat:@"image/%@",mimeType?mimeType:@"jpeg"]];
         }];
         
@@ -174,7 +174,7 @@
     dispatch_once(&onceToken, ^{
         manager = [PGNetAPIClient sharedClient];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        manager.requestSerializer.timeoutInterval = 5.0f;
+        manager.requestSerializer.timeoutInterval = 20.0f;
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     });
