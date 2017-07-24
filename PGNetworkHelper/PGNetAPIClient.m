@@ -5,7 +5,6 @@
 //  Copyright © 2016年 piggybear. All rights reserved.
 //
 
-
 #import "PGNetAPIClient.h"
 
 @implementation PGNetAPIClient
@@ -17,7 +16,10 @@ static AFSSLPinningMode _pinningMode = AFSSLPinningModeNone;
     static PGNetAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[PGNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:_baseUrl]];
+        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLCache *urlCache = [[NSURLCache alloc]initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+        sessionConfiguration.URLCache = urlCache;
+        _sharedClient = [[PGNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:_baseUrl] sessionConfiguration:sessionConfiguration];
         _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:_pinningMode];
     });
     return _sharedClient;
@@ -30,6 +32,5 @@ static AFSSLPinningMode _pinningMode = AFSSLPinningModeNone;
 + (void)policyWithPinningMode:(AFSSLPinningMode)pinningMode {
     _pinningMode = pinningMode;
 }
-
 
 @end
