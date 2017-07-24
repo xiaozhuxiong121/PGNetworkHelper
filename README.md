@@ -141,3 +141,6 @@ NSURLSessionTask *task = [PGNetworkHelper GET:@"api/user/login.json" parameters:
 ```
 [PGNetworkCache getResponseCacheForKey:@"cacheKey"];
 ```
+
+# 许可证
+PGNetworkHelper 使用 MIT 许可证，详情见 LICENSE 文件。
