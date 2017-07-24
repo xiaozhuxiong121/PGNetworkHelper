@@ -1,9 +1,9 @@
 # PGNetworkHelper
 PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，使用方法及其简单。  
-> PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用MD5进行了加密，确保数据的安全。
+> PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。
 
 **AFNetworking本身就带有缓存策略，为什么要使用PINCache作为缓存呢？**
-> 第一，经过测试PINCache缓存比AFNetworking自带的缓存要快。
+> 第一，经过测试PINCache缓存比AFNetworking自带的缓存要快。  
 > 第二，PINCache是将缓存数据进行了加密，更加安全。
 
 # Installation with CocoaPods
