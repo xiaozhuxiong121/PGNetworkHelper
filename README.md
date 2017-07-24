@@ -1,4 +1,4 @@
-[![CocoaPods compatible](http://upload-images.jianshu.io/upload_images/1340308-6532130a70265dab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://github.com/xiaozhuxiong121/PGNetworkHelper)  
+[![PGNetworkHelper](http://upload-images.jianshu.io/upload_images/1340308-6532130a70265dab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://github.com/xiaozhuxiong121/PGNetworkHelper)  
 
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/PGNetworkHelper.svg)](https://cocoapods.org/pods/PGNetworkHelper)
 ![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Objective--C-orange.svg)
