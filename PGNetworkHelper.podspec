@@ -15,3 +15,4 @@ Pod::Spec.new do |s|
   s.dependency 'PINCache'
 end
  
+ 
