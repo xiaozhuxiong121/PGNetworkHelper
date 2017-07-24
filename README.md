@@ -1,16 +1,16 @@
 # PGNetworkHelper
-PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，使用方法及其简单。  
+PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法及其简单。  
 > PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。
 
 **AFNetworking本身就带有缓存策略，为什么要使用PINCache作为缓存呢？**
 > 第一，经过测试PINCache缓存比AFNetworking自带的缓存要快。  
 > 第二，PINCache是将缓存数据进行了加密，更加安全。
 
-# Installation with CocoaPods
+# CocoaPods安装
 ```
 pod 'PGNetworkHelper'
 ```
-# Usage
+# 使用
 ``` oc
 #import <PGNetworkHelper.h>
 
@@ -21,60 +21,65 @@ pod 'PGNetworkHelper'
 //设置缓存路径
 //多用户一般用userId来保存每个用户的缓存数据
 [PGNetworkCache pathName:@"userId"];
-//GET请求
+
+//GET请求 只需要将cache设置为true就可以自动缓存
 [PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:false responseCache:nil success:^(id responseObject) {
-    NSLog(@"error = %@", responseObject);
+    NSLog(@"responseObject = %@", responseObject);
 } failure:^(NSError *error) {
-        NSLog(@"error = %@", error);
+    NSLog(@"error = %@", error);
 }];
-//POST请求
+
+
+//POST请求 只需要将cache设置为true就可以自动缓存
 [PGNetworkHelper POST:@"api/user/login.json" parameters:@{@"username":@"test",@"password":@"test"} cache:false responseCache:nil success:^(id responseObject) {
-    NSLog(@"error = %@", responseObject);
+    NSLog(@"responseObject = %@", responseObject);
 } failure:^(NSError *error) {
     NSLog(@"error = %@", error);
 }];
     
 ```
-# API
-## PGNetworkHelper
-```oc
-/**
- *  GET请求
- *
- *  @param URL           请求地址
- *  @param parameters    请求参数
- *  @param cache         是否缓存数据
- *  @param responseCache 缓存数据的回调
- *  @param success       请求成功的回调
- *  @param failure       请求失败的回调
- *
- *  @return 返回的对象可取消请求,调用cancle方法
- */
-+ (NSURLSessionTask *)GET:(NSString *)URL
-               parameters:(id)parameters
-                    cache:(BOOL)cache
-            responseCache:(HttpRequestCache)responseCache
-                  success:(HttpRequestSuccess)success
-                  failure:(HttpRequestFailed)failure;
+# 自动缓存
+```
+//只需要将cache设置为true就可以自动缓存，如果不想缓存就设置cache为false
+[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:true responseCache:^(id responseCache) {
+	NSLog(@"responseCache = %@", responseCache);
+}  success:^(id responseObject) {
+	NSLog(@"responseObject = %@", responseObject);
+} failure:^(NSError *error) {
+	NSLog(@"error = %@", error);
+}];
+```
+# 使用手动缓存
+> 如果需要将数据先进行处理，然后在缓存也是可以的。
 
-/**
- *  POST请求
- *
- *  @param URL           请求地址
- *  @param parameters    请求参数
- *  @param cache         是否缓存数据
- *  @param responseCache 缓存数据的回调
- *  @param success       请求成功的回调
- *  @param failure       请求失败的回调
- *
- *  @return 返回的对象可取消请求,调用cancle方法
- */
-+ (NSURLSessionTask *)POST:(NSString *)URL
-                parameters:(id)parameters
-                     cache:(BOOL)cache
-             responseCache:(HttpRequestCache)responseCache
-                   success:(HttpRequestSuccess)success
-                   failure:(HttpRequestFailed)failure;
+```
+//cache设置为true
+[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:true responseCache:^(id responseCache) {
+	NSLog(@"responseCache = %@", responseCache);
+}  success:^(id responseObject) {
+	//这里进行要缓存的数据，cacheKey就是url，如果有参数的话，就把参数拼接到cacheKey后面，下次就可以直接在responseCache block里面获取了
+	[PGNetworkCache saveResponseCache:responseObject forKey:@""];
+} failure:^(NSError *error) {
+	NSLog(@"error = %@", error);
+    }];
+```
+# 取消当前的网络请求
+```
+NSURLSessionTask *task = [PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:false responseCache:nil success:^(id responseObject) {
+	NSLog(@"responseObject = %@", responseObject);
+} failure:^(NSError *error) {
+	NSLog(@"error = %@", error);
+}];
+[task cancel]; //取消当前网络请求
+```
+
+# 取消所有的网络请求
+```
+[PGNetworkHelper cancelAllOperations];
+```
+
+# 上传图片
+```
 /**
  *  上传图片文件
  *
@@ -99,7 +104,11 @@ pod 'PGNetworkHelper'
                                     progress:(HttpProgress)progress
                                      success:(HttpRequestSuccess)success
                                      failure:(HttpRequestFailed)failure;
+```
 
+# 下载文件
+
+```
 /**
  *  下载文件
  *
@@ -117,52 +126,12 @@ pod 'PGNetworkHelper'
                                        success:(void(^)(NSString *filePath))success
                                        failure:(HttpRequestFailed)failure;
 ```
-## PGNetworkCache
-``` oc
-/**
- *  设置缓存路径
- *
- *  @param name 路径文件夹的名称
- */
-+ (void)pathName:(NSString *)name;
 
-/**
- *  缓存网络数据
- *
- *  @param responseCache 服务器返回的数据
- *  @param key           缓存数据对应的key值,推荐填入请求的URL
- */
-+ (void)saveResponseCache:(id <NSCoding>)responseCache forKey:(NSString *)key;
-
-/**
- *  取出缓存的数据
- *
- *  @param key 根据存入时候填入的key值来取出对应的数据
- *
- *  @return 缓存的数据
- */
-+ (id)getResponseCacheForKey:(NSString *)key;
-
-/**
- *
- *  删除缓存
- *  @param key 要删除缓存的key值
- */
-+ (void)removeResponseCacheForKey:(NSString *)key;
-
-/**
- *  删除所有的缓存
- */
-+ (void)removeAllResponseCache;
+# 缓存数据
 ```
-## PGNetAPIClient
-``` oc
-/**
- *  设置baseUrl
- */
-+ (void)baseUrl:(NSString *)baseUrl;
-/**
- *  设置ssl
- */
-+ (void)policyWithPinningMode:(AFSSLPinningMode)pinningMode;
+[PGNetworkCache saveResponseCache:@"CacheObject" forKey:@"cacheKey"];
+```
+# 获取缓存数据
+```
+[PGNetworkCache getResponseCacheForKey:@"cacheKey"];
 ```
