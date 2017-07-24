@@ -1,4 +1,10 @@
-# PGNetworkHelper
+[![CocoaPods compatible](http://upload-images.jianshu.io/upload_images/1340308-6532130a70265dab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://github.com/xiaozhuxiong121/PGNetworkHelper)  
+
+[![CocoaPods compatible](https://img.shields.io/cocoapods/v/PGNetworkHelper.svg)](https://cocoapods.org/pods/PGNetworkHelper)
+![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Objective--C-orange.svg)
+![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
+ [![](https://img.shields.io/badge/jianshu-piggybear-red.svg)](http://www.jianshu.com/u/3740632b2002)
+
 PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法及其简单。  
 > PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。
 
