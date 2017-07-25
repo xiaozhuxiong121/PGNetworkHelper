@@ -5,8 +5,10 @@
 ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
  [![](https://img.shields.io/badge/jianshu-piggybear-red.svg)](http://www.jianshu.com/u/3740632b2002)
 
-PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法及其简单。  
-> PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。
+PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法极其简单。  
+> PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。  
+> 
+> PGNetworkHelper也支持同步请求
 
 **AFNetworking本身就带有缓存策略，为什么要使用PINCache作为缓存呢？**
 > 第一，经过测试PINCache缓存比AFNetworking自带的缓存要快。  
@@ -18,9 +20,9 @@ pod 'PGNetworkHelper'
 ```
 # 使用
 ``` oc
-#import <PGNetworkHelper.h>
+#import <PGNetworkHelper/PGNetworkHelper.h>
 
-//设置baseUrl(必须要设置)
+//设置baseUrl
 [PGNetAPIClient baseUrl:@"baseUrl"];
 //设置SSL
 [PGNetAPIClient policyWithPinningMode:AFSSLPinningModeNone];
@@ -29,7 +31,7 @@ pod 'PGNetworkHelper'
 [PGNetworkCache pathName:@"userId"];
 
 //GET请求 只需要将cache设置为true就可以自动缓存
-[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:false responseCache:nil success:^(id responseObject) {
+[PGNetworkHelper GET:@"yourUrlString" parameters:nil cache:false responseCache:nil success:^(id responseObject) {
     NSLog(@"responseObject = %@", responseObject);
 } failure:^(NSError *error) {
     NSLog(@"error = %@", error);
@@ -37,7 +39,7 @@ pod 'PGNetworkHelper'
 
 
 //POST请求 只需要将cache设置为true就可以自动缓存
-[PGNetworkHelper POST:@"api/user/login.json" parameters:@{@"username":@"test",@"password":@"test"} cache:false responseCache:nil success:^(id responseObject) {
+[PGNetworkHelper POST:@"yourUrlString" parameters:@{@"username":@"test",@"password":@"test"} cache:false responseCache:nil success:^(id responseObject) {
     NSLog(@"responseObject = %@", responseObject);
 } failure:^(NSError *error) {
     NSLog(@"error = %@", error);
@@ -47,7 +49,7 @@ pod 'PGNetworkHelper'
 # 自动缓存
 ```
 //只需要将cache设置为true就可以自动缓存，如果不想缓存就设置cache为false
-[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:true responseCache:^(id responseCache) {
+[PGNetworkHelper GET:@"yourUrlString" parameters:nil cache:true responseCache:^(id responseCache) {
 	NSLog(@"responseCache = %@", responseCache);
 }  success:^(id responseObject) {
 	NSLog(@"responseObject = %@", responseObject);
@@ -60,7 +62,7 @@ pod 'PGNetworkHelper'
 
 ```
 //cache设置为true
-[PGNetworkHelper GET:@"api/user/login.json" parameters:nil cache:true responseCache:^(id responseCache) {
+[PGNetworkHelper GET:@"yourUrlString" parameters:nil cache:true responseCache:^(id responseCache) {
 	NSLog(@"responseCache = %@", responseCache);
 }  success:^(id responseObject) {
 	//这里进行要缓存的数据，cacheKey就是url，如果有参数的话，就把参数拼接到cacheKey后面，下次就可以直接在responseCache block里面获取了
@@ -68,6 +70,17 @@ pod 'PGNetworkHelper'
 } failure:^(NSError *error) {
 	NSLog(@"error = %@", error);
     }];
+```
+#同步请求
+```
+#import <PGNetworkHelper/PGNetworkHelper+Synchronously.h>
+[PGNetworkHelper synchronouslyGET:@"yourUrlString" parameters:nil cache:true responseCache:^(id responseCache) {
+	NSLog(@"responseCache = %@", responseCache);
+} success:^(id responseObject) {
+	NSLog(@"responseObject = %@", responseObject);
+} failure:^(NSError *error) {
+	NSLog(@"error = %@", error);
+}];
 ```
 # 取消当前的网络请求
 ```
