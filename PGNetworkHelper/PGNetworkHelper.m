@@ -6,9 +6,9 @@
 //
 
 #import "PGNetworkHelper.h"
+#import <objc/runtime.h>
 
 @implementation PGNetworkHelper
-
 + (NSURLSessionTask *)GET:(NSString *)URL
                parameters:(id)parameters
                     cache:(BOOL)cache
@@ -17,7 +17,7 @@
                   failure:(HttpRequestFailed)failure {
     NSString *cacheKey = URL;
     if (parameters) {
-        cacheKey = [URL stringByAppendingString:[self dictionaryConvertJsonString:parameters]];
+        cacheKey = [URL stringByAppendingString:[self convertJsonStringFromDictionaryOrArray:parameters]];
     }
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
@@ -44,7 +44,7 @@
                    failure:(HttpRequestFailed)failure {
     NSString *cacheKey = URL;
     if (parameters) {
-        cacheKey = [URL stringByAppendingString:[self dictionaryConvertJsonString:parameters]];
+        cacheKey = [URL stringByAppendingString:[self convertJsonStringFromDictionaryOrArray:parameters]];
     }
     if (responseCache) {
         responseCache([PGNetworkCache getResponseCacheForKey:cacheKey]);
@@ -124,6 +124,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [PGNetAPIClient sharedClient];
+        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.requestSerializer.timeoutInterval = 20.0f;
         manager.requestSerializer.cachePolicy = NSURLCacheStorageNotAllowed;
@@ -133,7 +134,7 @@
     return manager;
 }
 
-+(void)timeoutInterval:(NSTimeInterval)timeInterval {
++ (void)timeoutInterval:(NSTimeInterval)timeInterval {
     AFHTTPSessionManager *manager = [self manager];
     manager.requestSerializer.timeoutInterval = timeInterval;
 }
@@ -142,10 +143,11 @@
     [[self manager].operationQueue cancelAllOperations];
 }
 
-+ (NSString *)dictionaryConvertJsonString:(id)parameter {
++ (NSString *)convertJsonStringFromDictionaryOrArray:(id)parameter {
     NSData *data = [NSJSONSerialization dataWithJSONObject:parameter options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     return jsonStr;
 }
 
 @end
+

@@ -114,5 +114,13 @@ typedef void (^HttpProgress)(NSProgress *progress);
  */
 + (void)cancelAllOperations;
 
+/**
+ 将数组或字典转成json字符串
+
+ @param parameter 数组或字典
+ @return json字符串
+ */
++ (NSString *)convertJsonStringFromDictionaryOrArray:(id)parameter;
+
 @end
 

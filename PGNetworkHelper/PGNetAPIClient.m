@@ -30,5 +30,5 @@ static AFSSLPinningMode _pinningMode = AFSSLPinningModeNone;
 + (void)policyWithPinningMode:(AFSSLPinningMode)pinningMode {
     _pinningMode = pinningMode;
 }
-@end
 
+@end
