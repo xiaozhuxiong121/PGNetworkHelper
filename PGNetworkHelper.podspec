@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "PGNetworkHelper"
-  s.version      = "1.0.9"
-  s.summary      = "PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来。"
+  s.version      = "2.0"
+  s.summary      = "PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，并且支持同步请求，使用方法及其简单。"
   s.homepage     = "https://github.com/xiaozhuxiong121/PGNetworkHelper"
   s.license      = "MIT"
   s.author       = { "piggybear" => "piggybear_net@163.com" }
