@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
  [![](https://img.shields.io/badge/jianshu-piggybear-red.svg)](http://www.jianshu.com/u/3740632b2002)
 
-PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法极其简单。  
+PINCache做为AFNetworking3.x缓存层，将AFNetworking3.x请求的数据缓存起来,支持取消当前网络请求，以及取消所有的网络请求，除了常用的Get，Post方法，也将上传图片以及下载文件进行了封装，使用方法极其简单。  
 > PGNetworkHelper屏蔽了AFNetworking自带的缓存，并将PINCache缓存的key也用**MD5加密**，确保数据的安全。  
 > 
 > PGNetworkHelper也支持同步请求
@@ -16,7 +16,7 @@ PINCache做为AFNetworking缓存层，将AFNetworking请求的数据缓存起来
 
 # CocoaPods安装
 ```
-pod 'PGNetworkHelper'
+pod 'PGNetworkHelper', '~> 2.0'
 ```
 # 使用
 ``` oc
