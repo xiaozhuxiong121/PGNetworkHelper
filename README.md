@@ -71,7 +71,7 @@ pod 'PGNetworkHelper'
 	NSLog(@"error = %@", error);
     }];
 ```
-#同步请求
+# 同步请求
 ```
 #import <PGNetworkHelper/PGNetworkHelper+Synchronously.h>
 [PGNetworkHelper synchronouslyGET:@"yourUrlString" parameters:nil cache:true responseCache:^(id responseCache) {
