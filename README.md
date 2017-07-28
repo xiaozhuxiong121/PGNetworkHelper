@@ -71,6 +71,16 @@ pod 'PGNetworkHelper', '~> 2.0'
 	NSLog(@"error = %@", error);
     }];
 ```
+# 删除缓存
+```
+[PGNetworkCache removeResponseCacheForKey:@"cacheKey"];
+```
+
+# 删除所有的缓存
+```
+[PGNetworkCache removeAllResponseCache];
+```
+
 # 同步请求
 ```
 #import <PGNetworkHelper/PGNetworkHelper+Synchronously.h>
