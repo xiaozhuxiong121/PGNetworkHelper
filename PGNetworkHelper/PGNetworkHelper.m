@@ -66,7 +66,6 @@
     }];
 }
 
-#pragma mark - 上传图片文件
 + (NSURLSessionTask *)uploadWithURL:(NSString *)URL
                          parameters:(NSDictionary *)parameters
                              images:(NSArray<UIImage *> *)images
@@ -95,7 +94,6 @@
     }];
 }
 
-#pragma mark - 下载文件
 + (NSURLSessionTask *)downloadWithURL:(NSString *)URL
                               fileDir:(NSString *)fileDir
                              progress:(HttpProgress)progress
@@ -106,7 +104,7 @@
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         progress ? progress(downloadProgress) : nil;
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        NSString *downloadDir = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:fileDir ? fileDir : @"Download"];
+        NSString *downloadDir = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:fileDir ? fileDir : @"PGNetworkHelper"];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager createDirectoryAtPath:downloadDir withIntermediateDirectories:YES attributes:nil error:nil];
         NSString *filePath = [downloadDir stringByAppendingPathComponent:response.suggestedFilename];

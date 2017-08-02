@@ -11,15 +11,9 @@
 #import "PGNetworkCache.h"
 #import "PGNetAPIClient.h"
 
-/** 请求成功的Block */
 typedef void(^HttpRequestSuccess)(id responseObject);
-
-/** 请求失败的Block */
 typedef void(^HttpRequestFailed)(NSError *error);
-
-/** 缓存的Block */
 typedef void(^HttpRequestCache)(id responseCache);
-/** 上传或者下载的进度, Progress.completedUnitCount:当前大小 - Progress.totalUnitCount:总大小*/
 typedef void (^HttpProgress)(NSProgress *progress);
 
 @interface PGNetworkHelper : NSObject
@@ -80,7 +74,6 @@ typedef void (^HttpProgress)(NSProgress *progress);
  *  @param progress   上传进度信息
  *  @param success    请求成功的回调
  *  @param failure    请求失败的回调
- *
  *  @return 返回的对象可取消请求,调用cancle方法
  */
 + (NSURLSessionTask *)uploadWithURL:(NSString *)URL
@@ -100,8 +93,7 @@ typedef void (^HttpProgress)(NSProgress *progress);
  *  @param progress 文件下载的进度信息
  *  @param success  下载成功的回调(回调参数filePath:文件的路径)
  *  @param failure  下载失败的回调
- *
- *  @return 返回NSURLSessionDownloadTask实例，可用于暂停继续，暂停调用suspend方法，开始下载调用resume方法
+ *  @return 返回的对象可取消请求,调用cancle方法
  */
 + (__kindof NSURLSessionTask *)downloadWithURL:(NSString *)URL
                                        fileDir:(NSString *)fileDir
