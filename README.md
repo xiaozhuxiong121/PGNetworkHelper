@@ -16,7 +16,7 @@ PINCache做为AFNetworking3.x缓存层，将AFNetworking3.x请求的数据缓存
 
 # CocoaPods安装
 ```
-pod 'PGNetworkHelper', '~> 2.0'
+pod 'PGNetworkHelper', '>= 2.0'
 ```
 # 使用
 ``` oc
